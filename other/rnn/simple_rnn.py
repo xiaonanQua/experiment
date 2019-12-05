@@ -19,9 +19,9 @@ num_inputs, num_hiddens, num_outputs = vocab_size, 256, vocab_size
 batch_size = 32
 num_steps = 35  # 在批次内的序列步长
 lr = 1e2  # 学习率
-num_epochs = 250  # 训练周期
+num_epochs = 300  # 训练周期
 clipping_theta = 1e-2  # 梯度裁剪阈值
-pred_period, pred_len, prefixes = 50, 50, ['分开', '不分开']
+pred_period, pred_len, prefixes = 30, 50, ['分开', '不分开', '想念你']
 
 # 采样方式,随机采样(random),相邻采样(adjacent)
 sample_type = 'random'
@@ -61,7 +61,7 @@ for epoch in range(num_epochs):
     l_sum, n, start = 0.0, 0, time.time()
 
     for X, Y in data:
-        print('训练样本形状：', X.size(), Y.size())
+        # print('训练样本形状：', X.size(), Y.size())
         # 如使用随机采样，在每个小批量更新前初始化隐藏状态
         if sample_type is 'random':
             state = tool.init_rnn_state(batch_size, num_hiddens, device)
@@ -72,7 +72,7 @@ for epoch in range(num_epochs):
                 s.detach_()
         # 将采样的数据转化成词向量
         inputs = tool.seq_one_hot(X, vocab_size)
-        print('转化后的词向量形状：', inputs[0].size())
+        # print('转化后的词向量形状：', inputs[0].size())
         # outputs有num_steps个形状为(batch_size, vocab_size)的矩阵,即一批次的输出
         (outputs, state) = tool.rnn(inputs, state, params)
         # 拼接之后的形状为(num_steps*batch_size, vocab_size)
@@ -86,8 +86,8 @@ for epoch in range(num_epochs):
 
         # 梯度清0；求梯度
         if params[0].grad is not None:
-            for params in params:
-                params.grad.data.zero_()
+            for param in params:
+                param.grad.data.zero_()
         l.backward()
 
         # 梯度裁剪

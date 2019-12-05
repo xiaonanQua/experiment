@@ -271,7 +271,7 @@ def read_jay_lyrics(num_examples=None):
     :return:
     """
     # 打开周杰伦歌词文件
-    file_path = '/home/xiaonan/Dataset/lyrics/jaychou_lyrics.txt.zip'
+    file_path = '/home/team/xiaonan/Dataset/lyrics/jaychou_lyrics.txt.zip'
     with zipfile.ZipFile(file=file_path) as zin:
         with zin.open('jaychou_lyrics.txt') as file:
             lyrics = file.read().decode('utf-8')
@@ -421,7 +421,7 @@ def rnn(inputs, state, params):
     :return:(当前层的输出,隐状态)
     """
     # 获取初始的参数、上一时刻的隐藏
-    W_xh, W_hh, b_h, W_hq, b_q = params()
+    W_xh, W_hh, b_h, W_hq, b_q = params
     H, = state
     outputs = []
     for X in inputs:
