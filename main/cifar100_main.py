@@ -10,6 +10,7 @@ from train_and_test.train_and_valid import train_and_valid, train_and_valid_, te
 from models.alexnet import AlexNet
 from models import resnet_v2, vggnet
 from utils.tools import visiual_confusion_matrix
+from utils.warmup_optim import WarmupOptimizer
 
 
 # ----------------配置数据--------------------------
@@ -67,8 +68,10 @@ net = net.to(cfg.device)
 # net = nn.DataParallel(net, device_ids=[0, 1])
 criterion = nn.CrossEntropyLoss().cuda(device=cfg.device)
 # 常规优化器：随机梯度下降和Adam
-optimizer = optim.SGD(params=net.parameters(), lr=cfg.learning_rate,
+optimizer = optim.SGD(params=filter(lambda p:p.requires_grad, net.parameters()), lr=0,
                       weight_decay=cfg.weight_decay, momentum=cfg.momentum)
+optimizer = WarmupOptimizer(lr_base=cfg.learning_rate, optimizer=optimizer, data_size=cfg.data_size,
+                            batch_size=cfg.batch_size, is_warmup=False)
 # optimizer = optim.Adam(params=net.parameters(), lr=cfg.learning_rate,
 #                        weight_decay=cfg.weight_decay)
 # 线性学习率优化器

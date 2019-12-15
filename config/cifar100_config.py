@@ -70,7 +70,10 @@ class Cifar100Config(Config):
                                     transform=data_preprocess[0], download=True)
             valid_dataset = CIFAR100(root=root, train=train,
                                     transform=data_preprocess[1], download=True)
+            # 获得类别名称；训练数据大小
             self.name_classes = train_dataset.classes
+            self.data_size = len(train_dataset.data)
+
             # 获取训练集的长度
             num_samples = len(train_dataset.data)
 
@@ -96,7 +99,10 @@ class Cifar100Config(Config):
             return (train_loader, valid_loader)
         else:
             dataset = CIFAR100(root=root, train=train, transform=data_preprocess, download=True)
+        # 获得类别名称；训练数据大小
         self.name_classes = dataset.classes
+        self.data_size = len(dataset.data)
+
         # 获得数据集加载器
         data_loader = DataLoader(dataset=dataset, batch_size=self.batch_size, shuffle=shuffle)
         return data_loader
