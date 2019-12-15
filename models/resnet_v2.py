@@ -29,12 +29,14 @@ class ResNet(nn.Module):
         :param type_dataset:数据集类型，对于类似于cifar10这种图像尺寸比较小的数据集，应修改第一步的卷积核。
         """
         super(ResNet, self).__init__()
+        self.type_dataset = type_dataset
         self.inplanes = 64  # 通道数
         # 定义网络组件
-        if type_dataset in ['cifar-10']:
+        if type_dataset in ['small']:
             self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=3, stride=1, padding=1, bias=True)
         else:
             self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=7, stride=2, padding=3, bias=True)
+
         self.bn1 = nn.BatchNorm2d(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
@@ -50,24 +52,19 @@ class ResNet(nn.Module):
     def forward(self, x):
         # 第一组对输入图像进行一个卷积
         x = self.conv1(x)
-        print(x.size())
         x = self.bn1(x)
         x = self.relu(x)
-        # x = self.maxpool(x)
+        if self.type_dataset is not 'small':
+            x = self.maxpool(x)
 
         # 四个组
         x = self.layer1(x)
-        print(x.size())
         x = self.layer2(x)
-        print(x.size())
         x = self.layer3(x)
-        print(x.size())
         x = self.layer4(x)
-        print(x.size())
 
         # 平均池化再添加一个全连接
         x = self.avgpool(x)
-        print(x.size())
         x = torch.flatten(x, 1)
         x = self.fc(x)
 

@@ -22,16 +22,6 @@ def train_and_valid_(net, criterion, optimizer, train_loader, valid_loader, cfg,
         net.load_state_dict(torch.load(cfg.checkpoints))
         print('加载权重信息...')
 
-    # 配置学习率衰减器(默认是按epoch衰减);两种类型的学习率衰减
-    if is_lr_adjust:
-        # 按一定周期之后进行衰减<StepLR>
-        lr_shcleduler_step = StepLR(optimizer=optimizer, step_size=cfg.lr_decay_step)
-    elif is_lr_warmup:  # 若True，则开启学习率预热
-        # 定义Lambda表达式 < LambdaLR >
-        lr_lambda = lambda epoch: epoch / cfg.lr_warmup_step
-        lr_shcleduler_warmup = LambdaLR(optimizer=optimizer, lr_lambda=lr_lambda)
-        lr_shcleduler_warmup.step()
-
     # 获得记录日志信息的写入器
     writer = SummaryWriter(cfg.log_dir)
 
@@ -159,15 +149,6 @@ def train_and_valid_(net, criterion, optimizer, train_loader, valid_loader, cfg,
         train_acc, train_loss, num_step = _train(train_loader, num_step)
         # 验证
         valid_acc, valid_loss = _valid(valid_loader)
-
-        # 调整学习率
-        # 在前几周期内，进行学习率预热
-        if is_lr_warmup is True and epoch < cfg.lr_warmup_step:
-            lr_shcleduler_warmup.step()
-            print('  epoch:{}/{}, learning rate warmup...{}'.
-                  format(epoch, cfg.lr_warmup_step - 1, lr_shcleduler_warmup.get_lr()))
-        elif is_lr_adjust:  # 在经过一定学习率预热后，学习率恢复成初始的值。或则直接进行周期下降。
-            lr_shcleduler_step.step()
 
         # 输出每周期的训练、验证的平均损失值、准确率
         epoch_time = time.time() - epoch_start_time

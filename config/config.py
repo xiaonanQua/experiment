@@ -13,23 +13,17 @@ class Config(object):
     def __init__(self):
         # -----------------------------------------------------------文件目录配置
         # 数据集根目录、项目根目录、训练数据保存目录（实验室）
-        self.root_dataset = '/home/team/xiaonan/Dataset/'
-        self.root_project = '/home/team/xiaonan/experients/'
-        self.root_data_save = '/home/team/xiaonan/data_save/'
+        # self.root_dataset = '/home/team/xiaonan/dataset/'
+        # self.root_project = '/home/team/xiaonan/experient/'
+        # self.root_data_save = '/home/team/xiaonan/data_save/'
         # 数据集根目录、项目根目录、训练数据保存目录（本机）
-        # self.root_dataset = '/home/xiaonan/Dataset/'
-        # self.root_project = '/home/xiaonan/experients/'
-        # self.root_data_save = '/home/xiaonan/data_save/'
+        self.root_dataset = '/home/xiaonan/dataset/'
+        self.root_project = '/home/xiaonan/workspace/python_project/experients/'
+        self.root_data_save = '/home/xiaonan/datasave/'
         # 数据集根目录、项目根目录、训练数据保存目录（服务器）
         # self.root_dataset = 'Dataset/'
         # self.root_project = ''
         # self.root_data_save = 'data_save/'
-
-        # cifar-10数据集目录、文件名称
-        self.cifar_10_dir = self.root_dataset + 'cifar-10/'
-        self.cifar_file_name = {'meta': 'batches.meta',
-                                'train': ['data_batch_1', 'data_batch_2', 'data_batch_3', 'data_batch_4', 'data_batch_5'],
-                                'test': 'test_batch'}
 
         # svhn数据集目录、文件名称
         self.svhn_dir = self.root_dataset + 'svhn/'

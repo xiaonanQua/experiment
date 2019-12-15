@@ -1,19 +1,39 @@
 # -*- coding:utf-8 -*-
 from __future__ import division, print_function, absolute_import
-import math
-import sys
-import os
-import time
-import torch
+import os, sys, time, math, torch, cv2, zipfile, random
 from torch.utils.data import random_split
 import numpy as np
 import pandas as pd
 import seaborn as sn
 import matplotlib.pyplot as plt
 from config.cifar10_config import Cifar10Config
-import cv2
-import zipfile
-import random
+from torch.utils.data import DataLoader
+
+
+
+def get_mean_std(dataset):
+    """
+    计算数据集的均值和标准差
+    :parm dataset: 数据集
+    """
+    # 定义均值和标准差
+    mean = torch.zeros(3)
+    std = torch.zeros(3)
+
+    # 获得数据加载器
+    data_loader = DataLoader(dataset, batch_size=1, shuffle=True, num_workers=4)
+
+    print('Compute the mean and std...')
+    for image,label in data_loader:
+        #　统计每个图像的每个通道的均值和标准差
+        for i in range(3):
+            mean[i] += image[:, i, :, :].mean()
+            std[i] += image[:, i, :, :].std()
+    # 求出整体样本的平均均值和标准差
+    mean.div_(len(dataset))
+    std.div_(len(dataset))
+    return mean, std
+
 
 
 def view_bar(message, num, total):
