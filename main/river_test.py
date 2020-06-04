@@ -13,7 +13,7 @@ import time
 import torch.nn.functional as F
 
 # 训练、测试数据集路径
-test_dataset_path = '/home/data/V1.0/test/'
+test_dataset_path = '/home/data2/V1.0/test/'
 
 # 类别数量
 num_classes = 4

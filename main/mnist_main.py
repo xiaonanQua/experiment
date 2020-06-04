@@ -1,16 +1,9 @@
-import os
-import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.optim.lr_scheduler import StepLR
 import torchvision.transforms as transforms
-from torchvision.models import resnet18, resnet50, resnet34, alexnet
 from config.mnist_config import MnistConfig
-from config.test_config import TestConfig
-from train_and_test.train_and_valid import train_and_valid, train_and_valid_, test
-from models.alexnet import AlexNet
-from models.lenet import LeNet
-from models.vggnet import VGG
+from train_and_test.train_and_valid import test
+from models.backbone.lenet import LeNet
 from utils.tools import visiual_confusion_matrix
 
 
@@ -64,7 +57,7 @@ test_loader = cfg.dataset_loader(root=cfg.mnist_dir, train=False,
 # net = resnet50()
 # net = resnet18()
 net = LeNet(num_classes=cfg.num_classes)
-# net = VGG('VGG11', num_classes=10, dataset='cifar-10')
+# net = VGG('VGG11', num_classes=10, data2='cifar-10')
 # 重写网络最后一层
 # fc_in_features = net.fc.in_features  # 网络最后一层的输入通道
 # net.fc = nn.Linear(in_features=fc_in_features, out_features=cfg.num_classes)

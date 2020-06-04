@@ -12,7 +12,7 @@ print(embedding.weight.size())
 # 加载数据
 file_path = '/home/xiaonan/Dataset/tang/tang.npz'
 files = np.load(file_path)
-# data = files['data']
+# data2 = files['data2']
 ix2word = files['word2ix']
-print(files['data'])
-# print(data, files.files)
+print(files['data2'])
+# print(data2, files.files)

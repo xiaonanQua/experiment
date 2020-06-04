@@ -64,7 +64,7 @@ def sgd(params, lr, batch_size):
     # 为了和原书保持一致，这里除以了batch_size，但是应该是不用除的，因为一般用PyTorch计算loss时就默认已经
     # 沿batch维求了平均了。
     for param in params:
-        param.data -= lr * param.grad / batch_size # 注意这里更改param时用的param.data
+        param.data -= lr * param.grad / batch_size # 注意这里更改param时用的param.data2
 
 
 
@@ -87,7 +87,7 @@ def show_fashion_mnist(images, labels):
 
 # 5.6 修改
 # def load_data_fashion_mnist(batch_size, root='~/Datasets/FashionMNIST'):
-#     """Download the fashion mnist dataset and then load into memory."""
+#     """Download the fashion mnist data2 and then load into memory."""
 #     transform = transforms.ToTensor()
 #     mnist_train = torchvision.datasets.FashionMNIST(root=root, train=True, download=True, transform=transform)
 #     mnist_test = torchvision.datasets.FashionMNIST(root=root, train=False, download=True, transform=transform)
@@ -95,8 +95,8 @@ def show_fashion_mnist(images, labels):
 #         num_workers = 0  # 0表示不用额外的进程来加速读取数据
 #     else:
 #         num_workers = 4
-#     train_iter = torch.utils.data.DataLoader(mnist_train, batch_size=batch_size, shuffle=True, num_workers=num_workers)
-#     test_iter = torch.utils.data.DataLoader(mnist_test, batch_size=batch_size, shuffle=False, num_workers=num_workers)
+#     train_iter = torch.utils.data2.DataLoader(mnist_train, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+#     test_iter = torch.utils.data2.DataLoader(mnist_test, batch_size=batch_size, shuffle=False, num_workers=num_workers)
 
 #     return train_iter, test_iter
 
@@ -248,7 +248,7 @@ def train_ch5(net, train_iter, test_iter, batch_size, optimizer, device, num_epo
 
 # ########################## 5.6 #########################3
 def load_data_fashion_mnist(batch_size, resize=None, root='~/Datasets/FashionMNIST'):
-    """Download the fashion mnist dataset and then load into memory."""
+    """Download the fashion mnist data2 and then load into memory."""
     trans = []
     if resize:
         trans.append(torchvision.transforms.Resize(size=resize))
@@ -328,7 +328,7 @@ def resnet18(output=10, in_channels=3):
 # ############################## 6.3 ##################################3
 def load_data_jay_lyrics():
     """加载周杰伦歌词数据集"""
-    with zipfile.ZipFile('../../data/jaychou_lyrics.txt.zip') as zin:
+    with zipfile.ZipFile('../../data2/jaychou_lyrics.txt.zip') as zin:
         with zin.open('jaychou_lyrics.txt') as f:
             corpus_chars = f.read().decode('utf-8')
     corpus_chars = corpus_chars.replace('\n', ' ').replace('\r', ' ')
@@ -582,7 +582,7 @@ def show_trace_2d(f, results):
 
 # ######################################## 7.3 ###############################################
 def get_data_ch7():  
-    data = np.genfromtxt('../../data/airfoil_self_noise.dat', delimiter='\t')
+    data = np.genfromtxt('../../data2/airfoil_self_noise.dat', delimiter='\t')
     data = (data - data.mean(axis=0)) / data.std(axis=0)
     return torch.tensor(data[:1500, :-1], dtype=torch.float32), \
         torch.tensor(data[:1500, -1], dtype=torch.float32) # 前1500个样本(每个样本5个特征)
@@ -741,7 +741,7 @@ def read_imdb(folder='train', data_root="/S1/CSCL/tangss/Datasets/aclImdb"):
 
 def get_tokenized_imdb(data):
     """
-    data: list of [string, label]
+    data2: list of [string, label]
     """
     def tokenizer(text):
         return [tok.lower() for tok in text.split(' ')]

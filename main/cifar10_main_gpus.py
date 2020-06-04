@@ -1,16 +1,9 @@
-import os
-import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.optim.lr_scheduler import StepLR
 import torchvision.transforms as transforms
-from torchvision.models import resnet18, resnet50
+from torchvision.models import resnet50
 from config.cifar10_config import Cifar10Config
-from config.test_config import TestConfig
 from train_and_test.train_and_valid import train_and_valid_gpus, test
-from models.alexnet import AlexNet
-from utils.tools import vis
-
 
 # ----------------配置数据--------------------------
 # 配置实例化

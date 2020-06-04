@@ -1,14 +1,11 @@
 #  -*- coding:utf-8 -*-
 import torch
 import torch.nn as nn
-from torch.optim import lr_scheduler
 import torch.nn.functional as F
-import torchvision.models as model
-from torch.utils.data import DataLoader, random_split
+from torch.utils.data import DataLoader
 from torchvision.datasets import ImageFolder
 import torchvision.transforms as transforms
-from sklearn.metrics import accuracy_score
-import models.res2net as res
+import models.backbone.res2net as res
 import time
 import copy
 import os
@@ -43,8 +40,8 @@ print(valid_datasets[0][0].size(), valid_datasets[1][0].size())
 # 数据加载器
 train_data_loader = DataLoader(dataset=image_datasets, batch_size=cfg.batch_size, shuffle=True)
 
-# for index, data in enumerate(train_data_loader):
-#     images, labels = data
+# for index, data2 in enumerate(train_data_loader):
+#     images, labels = data2
 #     print(images.size(), labels)
 #     break
 
@@ -129,7 +126,7 @@ for epoch in range(cfg.epochs):
         loss.backward()
         optimizer.step()
 
-        # print('loss:{}, accuracy{}'.format(loss, torch.sum(preds == labels.data).double() / images.size(0)))
+        # print('loss:{}, accuracy{}'.format(loss, torch.sum(preds == labels.data2).double() / images.size(0)))
         # 统计损失,准确值,数据数量
         running_loss += loss.item() * images.size(0)
         running_corrects += torch.sum(preds == labels).item()

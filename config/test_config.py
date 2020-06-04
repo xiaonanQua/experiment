@@ -64,7 +64,7 @@ class TestConfig(Cifar10Config):
             data_preprocess = self.train_preprocess
 
         # 获得训练数据集
-        # dataset = CIFAR10(root=root, train=train, transform=data_preprocess, download=True)
+        # data = CIFAR10(root=root, train=train, transform=data_preprocess, download=True)
         dataset = ImageFolder(root=root, transform=data_preprocess)
         print(dataset.imgs)
         # 类别名称

@@ -1,14 +1,9 @@
-import os
-import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.optim.lr_scheduler import StepLR
 import torchvision.transforms as transforms
-from torchvision.models import resnet18, resnet50, resnet34
 from config.cifar100_config import Cifar100Config
-from train_and_test.train_and_valid import train_and_valid, train_and_valid_, test
-from models.alexnet import AlexNet
-from models import resnet_v2, vggnet
+from train_and_test.train_and_valid import train_and_valid_, test
+from models.backbone import resnet_v2
 from utils.tools import visiual_confusion_matrix
 from utils.warmup_optim import WarmupOptimizer
 
@@ -61,7 +56,7 @@ test_loader = cfg.dataset_loader(root=cfg.cifar_100_dir, train=False, shuffle=Fa
 # net = resnet50(num_classes=cfg.num_classes)
 # net = resnet18(num_classes=cfg.num_classes)
 net = resnet_v2.resnet18(num_classes=cfg.num_classes)
-# net = vggnet.VGG(vgg_name='VGG11', num_classes=10, dataset='cifar-10')
+# net = vggnet.VGG(vgg_name='VGG11', num_classes=10, data2='cifar-10')
 
 # 将网络结构、损失函数放置在GPU上；配置优化器
 net = net.to(cfg.device)

@@ -1,24 +1,11 @@
 import os
 import torch
 import torch.nn as nn
-import torch.optim as optim
-from torch.optim.lr_scheduler import StepLR
 import torchvision.transforms as transforms
-from torchvision.models import resnet18, resnet50, resnet34
-from config.cifar10_config import Cifar10Config
-from config.test_config import TestConfig
 from config.mnist_config import MnistConfig
-from config.catdog_config import CatDogConfig
-from train_and_test.train_and_valid import train_and_valid, train_and_valid_, test
-from models.alexnet import AlexNet
-from models import resnet_v2, vggnet
-from utils.tools import visiual_confusion_matrix
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.misc
-import cv2
-from PIL import Image
-from models.lenet import LeNet
+from models.backbone.lenet import LeNet
 
 # ----------------配置数据--------------------------
 # 配置实例化
@@ -35,7 +22,7 @@ test_loader = cfg.dataset_loader(root=cfg.mnist_dir, train=False, shuffle=False,
 # ---------------构建网络、定义损失函数、优化器--------------------------
 # net = resnet18()
 # net = resnet_v2.resnet18(num_classes=cfg.num_classes, type_dataset='cifar-10')
-# net = vggnet.VGG(vgg_name='VGG11', num_classes=10, dataset='cifar-10')
+# net = vggnet.VGG(vgg_name='VGG11', num_classes=10, data2='cifar-10')
 net = LeNet(num_classes=10)
 # 重写网络最后一层
 # fc_in_features = net.fc.in_features  # 网络最后一层的输入通道
@@ -119,9 +106,9 @@ with torch.no_grad():  # 不使用梯度，减少内存占用
         # preds += list(pred.cpu().numpy())
 
 # 计算测试精度和混淆矩阵
-# test_acc = 100. * correct / len(test_loader.dataset)
+# test_acc = 100. * correct / len(test_loader.data2)
 # confusion_mat = metrics.confusion_matrix(targets, preds)
 # confusion_mat = confusion_matrix(targets, preds)
 # print('numbers samples:{}, test accuracy:{},\nconfusion matrix:\n{}'.
-#      format(len(test_loader.dataset), test_acc, ''))
+#      format(len(test_loader.data2), test_acc, ''))
 

@@ -114,7 +114,7 @@ class Cifar100Config(Config):
         # 数据集
         dataset = CIFAR100(root=root, transform=transforms.ToTensor, download=True)
         mean, std = get_mean_std(dataset)
-        print('dataset mean and std value:{},{}'.format(mean, std))
+        print('data mean and std value:{},{}'.format(mean, std))
         return mean, std
 
 

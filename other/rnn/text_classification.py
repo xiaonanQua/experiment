@@ -38,7 +38,7 @@ def read_imdb(folder='train', data_root=None):
 # 对每条数据进行分词
 def get_tokenized_imdb(data):
     """
-    data:列表，[string, label]
+    data2:列表，[string, label]
     """
     def tokenizer(text):
         return [tok.lower() for tok in text.split(' ')]

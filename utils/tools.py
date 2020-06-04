@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from __future__ import division, print_function, absolute_import
-import os, sys, time, math, torch, cv2, zipfile, random
+import os, sys, time, math, torch, zipfile, random
 from torch.utils.data import random_split
 import numpy as np
 import pandas as pd
@@ -10,11 +10,10 @@ from config.cifar10_config import Cifar10Config
 from torch.utils.data import DataLoader
 
 
-
 def get_mean_std(dataset):
     """
     计算数据集的均值和标准差
-    :parm dataset: 数据集
+    :parm data2: 数据集
     """
     # 定义均值和标准差
     mean = torch.zeros(3)
@@ -33,7 +32,6 @@ def get_mean_std(dataset):
     mean.div_(len(dataset))
     std.div_(len(dataset))
     return mean, std
-
 
 
 def view_bar(message, num, total):
@@ -62,9 +60,9 @@ def mkdir(dir_path):
         os.mkdir(dir_path)
 
 
-def imshow(images, title=None):
+def image_show(image, title=None):
     """
-    显示一些PIL格式的图像
+    显示图像，根据
     :param images: 图像
     :param title: 标题
     :return:
@@ -80,18 +78,6 @@ def imshow(images, title=None):
     plt.imshow(images)
     if title is not None:
         plt.title(title)
-
-def show_image(images, num_rows, num_cols, scale=2):
-    """
-    显示多个图片
-    :param images: 多个图片
-    :param num_rows: 行数量
-    :param num_cols: 列数量
-    :param scale: 尺度
-    :return:
-    """
-    # 图像大小
-    figsize = (num_cols*scale, num_rows*scale)
 
 
 def one_hot_embedding(labels, num_classes):
@@ -469,8 +455,25 @@ def sgd(params, lr, batch_size):
     for param in params:
         param.data -= lr*param.grad / batch_size
 
+def visual_multi_image(data=None):
+    """
+    在一个图中可视化多个图
+    :param data: 字典格式，{‘name’：{x:[x1,x2,..], y:[y1, y2, y3], title:''}, ...}
+    :return:
+    """
+    x1 = list(range(10))
+    x2 = list(range(10))
 
+    y1 = list(range(10))
+    y2 = list(range(10))
 
+    plt.subplot(2, 1, 1)
+    plt.plot(x1, y1, 'o-')
+
+    plt.subplot(2, 1, 2)
+    plt.plot(x2, y2, '.-')
+    plt.savefig('test.png')
+    plt.show()
 
 
 if __name__ == "__main__":
@@ -485,7 +488,8 @@ if __name__ == "__main__":
     # my_seq = list(range(30))
     # for X,Y in seq_adjacent_sample(my_seq, batch_size=3, num_steps=5):
     #     print(X,Y)
-    x = torch.arange(10).view(2, 5)
-    print(x)
-    inputs = seq_one_hot(x, 2045)
-    print(len(inputs), inputs[0].size())
+    # x = torch.arange(10).view(2, 5)
+    # print(x)
+    # inputs = seq_one_hot(x, 2045)
+    # print(len(inputs), inputs[0].size())
+    visual_multi_image()

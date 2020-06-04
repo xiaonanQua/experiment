@@ -18,8 +18,8 @@ import copy
 import os
 
 # 训练、测试数据集路径
-train_dataset_path = '/home/data/V1.0/train/'
-test_dataset_path = '/home/data/V1.0/test/'
+train_dataset_path = '/home/data2/V1.0/train/'
+test_dataset_path = '/home/data2/V1.0/test/'
 
 # 设置实验超参数
 num_classes = 4
@@ -70,7 +70,7 @@ print(class_name)
 
 # 数据加载器;进行重采样后的数据加载器
 train_data_loader = DataLoader(dataset=image_datasets, batch_size=batch_size, shuffle=True)
-# train_data_loader = DataLoader(dataset=image_datasets, batch_size=batch_size,
+# train_data_loader = DataLoader(data2=image_datasets, batch_size=batch_size,
 #                                sampler=ImbalancedDatasetSampler(image_datasets))
 
 # 定义模型
@@ -182,7 +182,7 @@ for epoch in range(num_epoch):
             # 重置梯度张量
             optimizer.zero_grad()
 
-        # print('loss:{}, accuracy{}'.format(loss, torch.sum(preds == labels.data).double() / images.size(0)))
+        # print('loss:{}, accuracy{}'.format(loss, torch.sum(preds == labels.data2).double() / images.size(0)))
         # 统计损失,准确值,数据数量
         train_loss += loss.item() * batch_accumulate_size
         train_acc += torch.sum(preds == labels).item()

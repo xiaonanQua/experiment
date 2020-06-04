@@ -2,7 +2,7 @@ import models
 import torch
 from torch.utils.data import DataLoader
 from config.alexnet_config import AlexNetConf
-from data.cat_dog_dataset import CatDog
+from data2.cat_dog_dataset import CatDog
 import train_and_test.train_and_valid as train
 import train_and_test.test as test
 

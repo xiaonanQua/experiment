@@ -97,7 +97,7 @@ with torch.no_grad():
         # 迭代整个数据集
         for images in test_data_loader:
             # 获取图像和标签数据
-            # images= data
+            # images= data2
             # 若gpu存在，将图像和标签数据放入gpu上
             # images = images.to(device)
             # print(images.size())

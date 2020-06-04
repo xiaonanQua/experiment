@@ -24,8 +24,8 @@ model_names = model_names + sorted(name for name in models_vovnet.__dict__
 
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
-parser.add_argument('data', metavar='DIR',
-                    help='path to dataset')
+parser.add_argument('data2', metavar='DIR',
+                    help='path to data2')
 parser.add_argument('--arch', '-a', metavar='ARCH', default='vovnet69v2',
                     #choices=model_names,
                     help='model architecture: ' +
@@ -34,7 +34,7 @@ parser.add_argument('--arch', '-a', metavar='ARCH', default='vovnet69v2',
 parser.add_argument('--size', default=224, type=int, metavar='N',
                     help='input dimension')
 parser.add_argument('-j', '--workers', default=4, type=int, metavar='N',
-                    help='number of data loading workers (default: 4)')
+                    help='number of data2 loading workers (default: 4)')
 parser.add_argument('--epochs', default=90, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('--start-epoch', default=0, type=int, metavar='N',
@@ -199,7 +199,7 @@ def train(train_loader, model, criterion, optimizer, epoch):
 
     end = time.time()
     for i, (input, target) in enumerate(train_loader):
-        # measure data loading time
+        # measure data2 loading time
         data_time.update(time.time() - end)
 
         target = target.cuda(async=True)
